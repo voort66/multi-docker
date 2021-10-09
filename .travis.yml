@@ -7,4 +7,4 @@ before-install:
   - docker build -t voort66/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run voort66/react-test npm test -- --coverage 
+  - docker run -e CI=true voort66/react-test npm test
