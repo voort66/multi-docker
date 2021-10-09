@@ -8,3 +8,6 @@ before-install:
 
 script:
   - docker run -e CI=true voort66/react-test npm test
+
+after_succes:
+  - docker build -t voort66/multi-project ./client
