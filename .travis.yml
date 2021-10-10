@@ -10,4 +10,15 @@ script:
   - docker run -e CI=true voort66/react-test npm test
 
 after_succes:
-  - docker build -t voort66/multi-project ./client
+  - docker build -t voort66/multi-client ./client
+  - docker build -t voort66/multi-nginx ./nginx
+  - docker build -t voort66/multi-server ./server
+  - docker build -t voort66/multi-worker ./worker
+
+  #login docker cli
+  - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push the docker images
+  - docker push voort66/multi-client
+  - docker push voort66/multi-nginx
+  - docker push voort66/multi-server
+  - docker push voort66/multi-worker

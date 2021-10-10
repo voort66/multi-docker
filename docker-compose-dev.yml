@@ -11,11 +11,15 @@ services:
       - api
       - client
     restart: always
-    image: 'voort66/multi-nginx'
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
     ports:
       - '3050:80'
   api:
-    image: 'voort66/multi-server'
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
     volumes:
       - /app/node_modules
       - ./server:/app
@@ -29,12 +33,16 @@ services:
       - PGPORT=5432
   client:
     stdin_open: true
-    image: 'voort66/multi-client'
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
     volumes:
       - /app/node_modules
       - ./client:/app
   worker:
-    image: 'voort66/multi-worker'
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./worker
     volumes:
       - /app/node_modules
       - ./worker:/app
